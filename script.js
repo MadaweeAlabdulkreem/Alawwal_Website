@@ -10,6 +10,29 @@
   window.addEventListener('scroll', fn, {passive:true}); fn();
 })();
 
+/* ── Check login status and update UI ── */
+(function(){
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const userName = localStorage.getItem('userName') || '';
+  
+  const loginBtn = document.getElementById('loginBtn');
+  const userWelcome = document.getElementById('userWelcome');
+  const userNameSpan = document.getElementById('userName');
+  
+  if (isLoggedIn && loginBtn && userWelcome) {
+    loginBtn.style.display = 'none';
+    userWelcome.style.display = 'flex';
+    if (userNameSpan) userNameSpan.textContent = userName;
+  }
+})();
+
+/* ── Logout function ── */
+function logout() {
+  localStorage.removeItem('userName');
+  localStorage.removeItem('isLoggedIn');
+  window.location.href = 'index.html';
+}
+
 /* ── Hamburger ── */
 (function(){
   const b = document.querySelector('.burger');
@@ -161,16 +184,16 @@
 /* ======================== QUIZ ======================== */
 const Qs = [
   {
-    text:'ما الذي يثيرك أكثر عند التفكير في المستقبل؟',
-    opts:['استكشاف الكواكب والفضاء الخارجي','علاج الأمراض وإنقاذ الأرواح','نقل الأخبار والتواصل مع الناس','ابتكار تقنيات تغيّر العالم'],
+    text:'كيف تتعامل مع المشكلات عند مواجهتها؟',
+    opts:['تجربة حلول متعددة بشكل سريع','تحليل المشكلة بشكل منهجي خطوة بخطوة','ابتكار حلول جديدة وغير تقليدية','طلب المساعدة من أشخاص أخرين '],
   },
   {
-    text:'كيف تصف نفسك في وقت الفراغ؟',
-    opts:['أراقب النجوم وأقرأ عن الكون','أهتم بصحتي وصحة من حولي','أحب التصوير وسرد القصص','أبني وأجرّب وأصنع أشياء'],
+    text:' ما أكثر ما يجذب اهتمامك؟ ',
+    opts:['فهم كيفية عمل الأنظمة والتقنيات',' الإبداع والتصميم وتوليد الأفكار ','مساعدة الآخرين والتفاعل المباشر معهم',' التنظيم وادارة المشاريع والمهام'],
   },
   {
-    text:'ما الإنجاز الذي تتمنى أن يُذكر به اسمك؟',
-    opts:['اكتشاف كوكب أو ظاهرة كونية','اختراع علاج لمرض خطير','تقديم برنامج إعلامي يؤثر في الملايين','تصميم جهاز تقني ثوري'],
+    text:'كيف تبدأ عادةً عند العمل على مشروع جديد؟',
+    opts:['جمع البيانات والبحث قبل البدء','رسم الفكرة وتصميمها مباشرة','التجربة والتطبيق العملي السريع','وضع خطة وجدول زمني'],
   },
 ];
 const LTR = ['أ','ب','ج','د'];

@@ -108,6 +108,33 @@ button{font-family:var(--font);cursor:pointer;border:none;}
 }
 .btn-login:hover{background:var(--T);color:#fff;}
 
+/* User welcome */
+.user-welcome{
+  display:flex;align-items:center;
+  font-size:.9rem;font-weight:600;padding:0 22px;
+  border-radius:var(--r50);flex-shrink:0;
+  margin:14px 28px;
+  margin-left: 100px;
+  color: var(--Y);
+}
+.user-welcome span{color:#fff;margin-right:4px;}
+.logout-btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.3);
+  color:rgba(255,255,255,.7);
+  font-size:.75rem;
+  padding:4px 12px;
+  border-radius:20px;
+  margin-right:10px;
+  cursor:pointer;
+  transition:var(--tr);
+}
+.logout-btn:hover{
+  background:rgba(255,255,255,.1);
+  border-color:rgba(255,255,255,.5);
+  color:#fff;
+}
+
 /* Hamburger */
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
 .burger span{width:24px;height:2.5px;background:#fff;border-radius:2px;transition:var(--tr);}
@@ -800,6 +827,7 @@ tl p{color:rgba(255,255,255,.5);font-size:.97rem;max-width:560px;margin:22px aut
   .logo{border-left:none;padding:0;}
   .nav{display:none;position:static;transform:none;border:none;height:auto;padding:0;}
   .btn-login{display:none;}
+  .user-welcome{display:none;}
   .burger{display:flex;}
   .nav.open{
     display:flex;flex-direction:column;position:fixed;inset:0;

@@ -23,7 +23,8 @@
     <li><a href="index.html#fields-sec">المجالات</a></li>
     <li><a href="index.html#team-sec">من نحن</a></li>
   </ul>
-  <a href="auth.html" class="btn-login" style="border-color:var(--Y);color:var(--Y);">تسجيل الدخول</a>
+  <a href="auth.html" class="btn-login" id="loginBtn" style="border-color:var(--Y);color:var(--Y);">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">مرحباً <span id="userName"></span> <button class="logout-btn" onclick="logout()">خروج</button></span>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </header>
 

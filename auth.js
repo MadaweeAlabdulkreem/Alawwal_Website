@@ -183,6 +183,9 @@ function submitLogin(e) {
   /* Simulate async — replace with real API call */
   setTimeout(() => {
     setLoading('loginForm', false);
+    // حفظ بيانات المستخدم
+    localStorage.setItem('userName', email.split('@')[0]);
+    localStorage.setItem('isLoggedIn', 'true');
     showSuccessScreen(null, true);
   }, 1800);
 }
@@ -264,6 +267,9 @@ function submitSignup(e) {
   /* Simulate async — replace with real API call */
   setTimeout(() => {
     setLoading('signupForm', false);
+    // حفظ بيانات المستخدم
+    localStorage.setItem('userName', name);
+    localStorage.setItem('isLoggedIn', 'true');
     showSuccessScreen(name, false);
   }, 2000);
 }
