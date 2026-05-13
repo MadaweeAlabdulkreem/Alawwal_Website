@@ -15,14 +15,26 @@
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const userName = localStorage.getItem('userName') || '';
   
+  // Desktop elements
   const loginBtn = document.getElementById('loginBtn');
   const userWelcome = document.getElementById('userWelcome');
   const userNameSpan = document.getElementById('userName');
   
-  if (isLoggedIn && loginBtn && userWelcome) {
-    loginBtn.style.display = 'none';
-    userWelcome.style.display = 'flex';
+  // Mobile elements
+  const loginBtnMobile = document.getElementById('loginBtnMobile');
+  const mobileUserWelcome = document.getElementById('mobileUserWelcome');
+  const mobileUserNameSpan = document.getElementById('mobileUserName');
+  
+  if (isLoggedIn) {
+    // Desktop
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (userWelcome) userWelcome.style.display = 'flex';
     if (userNameSpan) userNameSpan.textContent = userName;
+    
+    // Mobile
+    if (loginBtnMobile) loginBtnMobile.style.display = 'none';
+    if (mobileUserWelcome) mobileUserWelcome.style.display = 'flex';
+    if (mobileUserNameSpan) mobileUserNameSpan.textContent = userName;
   }
 })();
 
@@ -85,14 +97,19 @@ function logout() {
   const N = track.querySelectorAll('.item').length; // عدد العناصر الأصليين
   track.innerHTML = track.innerHTML.repeat(3);       // ثلاث نسخ
 
-  const GAP = 20;
+  const GAP = 30;
   let idx  = N;    // نبدأ من المجموعة الوسطى
   let busy = false;
 
   const cardW = () => {
-    const c = track.querySelector('.item');
-    return c ? c.offsetWidth + GAP : 200;
-  };
+  const c = track.querySelector('.item');
+  if (!c) return 200;
+
+  const style = getComputedStyle(track);
+  const gap = parseFloat(style.gap || GAP);
+
+  return c.getBoundingClientRect().width + gap;
+};
 
   function setPos(i, anim) {
     if (!anim) {
@@ -107,6 +124,7 @@ function logout() {
   }
 
   setPos(N, false);
+  busy = false;
 
   // بعد كل حركة: إذا خرجنا عن النسخة الوسطى → ارجع بصمت
   track.addEventListener('transitionend', () => {
