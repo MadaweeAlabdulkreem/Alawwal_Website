@@ -6,9 +6,7 @@
 <title>رواد الفضاء — منصة الأول</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ════════════════════════════════════════
-   PIONEERS PAGE
-   ════════════════════════════════════════ */
+/* PIONEERS PAGE */
 
 .pio-bg {
   position: fixed; inset: 0; z-index: 0;
@@ -30,33 +28,37 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   height: calc(100vh - 72px);
   margin: 72px auto 0;
-
+  padding: 0 40px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: stretch;
-  gap: 0;
+  gap: 32px;
 
   overflow: hidden;
   box-sizing: border-box;
-
 }
 
 /* ── Right: thumbnails ── */
 .pio-nav {
-  flex: 0 0 110px;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  gap: 22px; padding: 0 4px 0 12px;
+  flex: 0 0 220px;   /* زيادة العرض */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-40px); /* ارفعها فوق */
+  gap: 2px;          /* تقليل المسافة بين العناصر */
+  padding: 0;
 }
 .pio-thumb {
   background: transparent !important; border: none !important;
   border-radius: 0 !important; padding: 0 !important; gap: 0 !important;
-  width: 96px; height: 106px; cursor: pointer; opacity: 0.5;
+  width: 140px; height: 160px; cursor: pointer; opacity: 0.5;
   transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
               opacity 0.4s ease, filter 0.4s ease;
+  
 }
 .pio-thumb:hover, .pio-thumb.active {
   background-color: transparent !important; border-color: transparent !important;
@@ -77,7 +79,7 @@
 .pio-char-shadow { display: none; }
 .pio-char {
   position: relative; z-index: 3;
-  width: auto; height: 100%; max-width: 660px;
+  width: auto; height: 100%; max-width: 600px;
   object-fit: contain; object-position: bottom center; display: block;
 }
 
@@ -91,12 +93,12 @@
 
 /* ── Left: info ── */
 .pio-info {
-  flex: 0 0 260px;
+  flex: 0 0 300px;
   display: flex; align-items: center;
-  padding: 0 20px 0 8px;
+  padding: 0;
 }
 .pio-info-inner {
-  width: 100%; display: flex; flex-direction: column; gap: 18px;
+  width: 100%; display: flex; flex-direction: column; gap: 20px;
 }
 
 /* Staggered text animations */
@@ -114,40 +116,62 @@
 .pio-name {
   font-size: clamp(1.8rem,2.6vw,2.6rem); font-weight: 900;
   color: #fff; line-height: 1.3; margin: 0;
+  transform: translateY(-30px); /* ارفعها فوق */
 }
 .pio-name-line {
   display: block; width: 60px; height: 3px; border-radius: 4px;
   margin-top: 14px; transition: background-color 0.75s ease;
+ 
 }
 .pio-bio {
   font-size: 0.95rem; color: rgba(255,255,255,0.62);
-  line-height: 2; margin: 0;
+  line-height: 2.1; margin: 0;
+  max-width: 100%;
+  letter-spacing: 0.3px;
+  word-spacing: 3px;
+  transform: translateY(-30px); /* ارفعها فوق */
 }
 .pio-btn {
-  display: inline-block; align-self: flex-start;
-  padding: 13px 34px; border-radius: 60px; border: none;
-  font-family: var(--font); font-size: 0.97rem; font-weight: 700;
+  display: inline-block; 
+  align-self: flex-start;
+  padding: 8px 44px; border-radius: 70px; border: none;
+  font-family: var(--font); font-size: 20px; font-weight: 700;
   cursor: pointer; color: #1a1200;
   transition: background 0.75s ease, box-shadow 0.75s ease, transform 0.3s ease;
 }
 .pio-btn:hover { transform: translateY(-3px); }
 
 /* ── Responsive ── */
+@media (max-width: 1080px) {
+  .pio-main {
+    padding: 0 30px;
+    gap: 24px;
+  }
+  .pio-nav {
+    flex: 0 0 160px;
+  }
+  .pio-info {
+    flex: 0 0 260px;
+  }
+}
+
 @media (max-width: 980px) {
-  .pio-main { flex-direction: column; height: auto; min-height: calc(100vh - 72px); align-items: center; overflow: visible; max-width: 100%; }
-  .pio-nav  { order:3; flex:none; flex-direction:row; width:100%; justify-content:center; padding:16px 0 28px; gap:16px; }
-  .pio-thumb { width: 96px; height: 106px; }
+  .pio-main { flex-direction: column; height: auto; min-height: calc(100vh - 72px); align-items: center; overflow: visible; max-width: 100%; padding: 0 20px; gap: 20px; }
+  .pio-nav  { order:3; flex:none; flex-direction:row; width:100%; justify-content:center; padding:20px 0 30px; gap:16px; }
+  .pio-thumb { width: 120px; height: 140px; }
   .pio-hero { order:1; flex:none; width:100%; height:55vh; }
   .pio-char { height:100%; max-width:280px; }
-  .pio-info { order:2; flex:none; width:100%; padding:28px 8% 20px; justify-content:center; }
+  .pio-info { order:2; flex:none; width:100%; padding:0 8%; justify-content:center; }
   .pio-info-inner { align-items:center; text-align:center; }
+  .pio-bio { line-height: 2.1; }
   .pio-name-line  { margin:12px auto 0; }
   .pio-btn        { align-self:center; }
 }
 @media (max-width: 480px) {
-  .pio-thumb { width:70px; height:78px; }
+  .pio-main { padding: 0 16px; }
+  .pio-thumb { width:90px; height:105px; }
   .pio-name  { font-size:1.5rem; }
-  .pio-bio   { font-size:0.86rem; }
+  .pio-bio   { font-size:0.86rem; line-height: 2; }
   .pio-btn   { font-size:0.88rem; padding:11px 26px; }
 }
 </style>
@@ -162,17 +186,20 @@
 <div class="pio-overlay" id="pioOverlay"></div>
 
 <!-- ══ Header ══ -->
-<header class="hdr solid" id="hdr">
-  <a href="index.html" class="logo">
-    <img class="logo-img" src="assets/logo.png" alt="منصة الأول">
-  </a>
+<!-- ══════════ HEADER ══════════ -->
+<header class="hdr" id="hdr">
+  <a href="index.html" class="logo"> <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول"> </a>
+  
   <ul class="nav" id="mainNav">
     <li><a href="index.html">الصفحة الرئيسية</a></li>
-    <li><a href="pioneers.html" style="color:var(--T)">رواد التميز</a></li>
-    <li><a href="index.html#fields-sec">المجالات</a></li>
-    <li><a href="index.html#about-sec">من نحن</a></li>
+    <li><a href="#pioneers-sec">رواد التميز</a></li>
+    <li><a href="#fields-sec">المجالات</a></li>
+    <li><a href="#team-sec">من نحن</a></li>
+    <li class="mobile-auth"><a href="auth.html" class="btn-login" id="loginBtnMobile">تسجيل الدخول</a></li>
+    <li class="mobile-auth-welcome" id="mobileUserWelcome" style="display:none;"><span>مرحباً <span id="mobileUserName"></span></span> <button class="logout-btn" onclick="logout()">خروج</button></li>
   </ul>
-  <a href="#" class="btn-login">تسجيل الدخول</a>
+  <a href="auth.html" class="btn-login" id="loginBtn">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">مرحباً <span id="userName"></span> <button class="logout-btn" onclick="logout()">خروج</button></span>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </header>
 
