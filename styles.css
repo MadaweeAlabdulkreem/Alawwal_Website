@@ -34,12 +34,20 @@ body{
 
 /* ── Page-wide glass overlay ── */
 .page-glass{
-  position:fixed;inset:0;z-index:1;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+
+  height:calc(100vh - 52px); /* ينتهي قبل شريط العبارات */
+
+  z-index:1;
   background:url('assets/افكت قلاسي .png') center/cover no-repeat;
   mix-blend-mode:overlay;
   opacity:1;
   pointer-events:none;
 }
+
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 button{font-family:var(--font);cursor:pointer;border:none;}
@@ -201,6 +209,29 @@ button{font-family:var(--font);cursor:pointer;border:none;}
   }
 }
 
+/* إخفاء عناصر الموبايل على الديسكتوب دائماً */
+.mobile-auth,
+.mobile-auth-welcome {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    /* على الموبايل نسمح لـ JS يتحكم فيها */
+    .mobile-auth {
+        display: block !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-login,
+    .user-welcome {
+        display: flex !important; /* اعرضها داخل الـ nav المفتوح */
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 
 /* ════════════════════ HERO ════════════════════ */
 .hero{
@@ -237,7 +268,7 @@ button{font-family:var(--font);cursor:pointer;border:none;}
   padding:18px 40px;
   min-width:220px;
   border-radius:var(--r50);
-  background:linear-gradient(90deg, #c1bcbc 0%, var(--Y) 100%);
+  background:linear-gradient(90deg, #ece6e6 0%, var(--Y) 100%);
   color:var(--P);
   font-weight:800;
   font-size:.97rem;

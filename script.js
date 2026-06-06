@@ -31,11 +31,20 @@
     if (userWelcome) userWelcome.style.display = 'flex';
     if (userNameSpan) userNameSpan.textContent = userName;
     
-    // Mobile
-    if (loginBtnMobile) loginBtnMobile.style.display = 'none';
-    if (mobileUserWelcome) mobileUserWelcome.style.display = 'flex';
-    if (mobileUserNameSpan) mobileUserNameSpan.textContent = userName;
-  }
+    // Mobile — أخفِ فقط إذا كانت الشاشة صغيرة
+    if (window.innerWidth <= 768) {
+        if (loginBtnMobile) loginBtnMobile.parentElement.style.display = 'none';
+        if (mobileUserWelcome) {
+            mobileUserWelcome.style.display = 'flex';
+            if (mobileUserNameSpan) mobileUserNameSpan.textContent = userName;
+        }
+    }
+    // على الديسكتوب: اخفِ عناصر الموبايل تماماً
+    else {
+        if (loginBtnMobile) loginBtnMobile.parentElement.style.display = 'none';
+        if (mobileUserWelcome) mobileUserWelcome.style.display = 'none';
+    }
+}
 })();
 
 /* ── Logout function ── */

@@ -131,23 +131,82 @@ body {
     opacity: 1;
 }
 
+/* Tablet */
+@media (max-width:1024px){
+
+    .courses-row{
+        gap:25px;
+    }
+
+    .course-card:hover .after-wrapper{
+        width:280px;
+    }
+
+    .after-img{
+        width:280px;
+    }
+}
+
+/* Mobile */
+@media (max-width:768px){
+
+    .courses-row{
+        flex-direction:column;
+        align-items:center;
+        gap:30px;
+    }
+
+    .course-card{
+        width:100%;
+        max-width:360px;
+        justify-content:center;
+    }
+
+    .before{
+        width:120px;
+    }
+
+    .after-wrapper{
+        width:220px;
+        opacity:1;
+        height:280px;
+    }
+
+    .after-img{
+        width:220px;
+        height:280px;
+    }
+
+    .course-card:hover .after-wrapper{
+        width:220px;
+    }
+
+    .arrow-link{
+        opacity:1;
+        width:60px;
+        height:60px;
+    }
+}
+
 </style>
 </head>
 <body>
 
 <div class="overlay"></div>
 
-<header class="hdr">
-  <a href="index.html" class="logo">
-    <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول">
-  </a>
-  <ul class="nav">
+<!-- ══════════ HEADER ══════════ -->
+<header class="hdr" id="hdr">
+  <a href="index.html" class="logo"> <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول"> </a>
+  
+  <ul class="nav" id="mainNav">
     <li><a href="index.html">الصفحة الرئيسية</a></li>
     <li><a href="#pioneers-sec">رواد التميز</a></li>
     <li><a href="#fields-sec">المجالات</a></li>
-    <li><a href="#team-sec">من نحن</a></li>
+    <li><a href="#about-sec">من نحن</a></li>
   </ul>
-  <a href="auth.html" class="btn-login">تسجيل الدخول</a>
+  <a href="auth.html" class="btn-login" id="loginBtn">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">مرحباً <span id="userName"></span> <button class="logout-btn" onclick="logout()">خروج</button></span>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </header>
 
 <div class="page-center">
@@ -203,6 +262,6 @@ body {
   </section>
 
 </div>
-
+<script src="script.js"></script>
 </body>
 </html>
