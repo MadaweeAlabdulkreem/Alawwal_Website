@@ -262,9 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const msgEl = document.getElementById('msg');
 
   const msgs = [
-    'نحلل شخصيتك...',
-    'نكتشف مجالك...',
-    'جاري تجهيز النتيجة...'
+    'نكتشف نقاط قوتك...',
+    'نختار لك المجال الأنسب',
   ];
 
   let pct = 0;
@@ -287,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
       msgEl.style.opacity = 1;
     }, 300);
 
-  }, 1200);
+  }, 2100);
 
   /* التقدم */
   const duration = 6000; // مدة التحميل (6 ثواني)

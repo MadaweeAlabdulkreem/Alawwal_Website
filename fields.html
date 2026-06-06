@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المجالات</title>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+body{
+    margin:0;
+    min-height:100vh;
+    background-image: url('assets/fields_bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+
+    min-height:100vh;
+}
+
+.card{
+    cursor:pointer;
+    transition:.3s;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+  margin-top:0;
+  margin-right:0;
+  width:560px;
+  display:block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+              filter 0.6s ease;
+  will-change: transform;
+}
+
+.card:hover img{
+  transform: scale(1.05);
+}
+
+@media(max-width:1200px){
+    .cards{
+        gap:50px;
+    }
+
+    .card img{
+        width:280px;
+    }
+}
+
+@media(max-width:768px){
+    .cards{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .card img{
+        width:260px;
+    }
+}
+
+
+</style>
+
+</head>
+<body>
+<!-- ══ Header ══ -->
+<header class="hdr" id="hdr">
+  <a href="index.html" class="logo"> <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول"> </a>
+  
+  <ul class="nav" id="mainNav">
+    <li><a href="index.html">الصفحة الرئيسية</a></li>
+    <li><a href="#pioneers-sec">رواد التميز</a></li>
+    <li><a href="#fields-sec">المجالات</a></li>
+    <li><a href="#team-sec">من نحن</a></li>
+    <li class="mobile-auth"><a href="auth.html" class="btn-login" id="loginBtnMobile">تسجيل الدخول</a></li>
+    <li class="mobile-auth-welcome" id="mobileUserWelcome" style="display:none;"><span>مرحباً <span id="mobileUserName"></span></span> <button class="logout-btn" onclick="logout()">خروج</button></li>
+  </ul>
+  <a href="auth.html" class="btn-login" id="loginBtn">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">مرحباً <span id="userName"></span> <button class="logout-btn" onclick="logout()">خروج</button></span>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<div class="cards">
+
+    <div class="card" onclick="openField('vr')">
+        <img id="vrImg" src="assets/vr_p1.png" alt="">
+    </div>
+
+    <div class="card" onclick="openField('qa')">
+        <img id="qaImg" src="assets/QA_p2.png" alt="">
+    </div>
+
+    <div class="card" onclick="openField('course')">
+        <img id="courseImg" src="assets/course_p3.png" alt="">
+    </div>
+
+</div>
+
+
+<script>
+function openField(type){
+
+
+    if(type === "vr"){
+        window.location.href = "Vr.html";
+    }
+
+    if(type === "qa"){
+        window.location.href = "qa.html";
+    }
+
+    if(type === "course"){
+        window.location.href = "courses.html";
+    }
+}
+
+function setHover(imgId, normalSrc, hoverSrc){
+  const el = document.getElementById(imgId);
+
+  el.addEventListener("mouseenter", () => {
+    el.src = hoverSrc;
+  });
+
+  el.addEventListener("mouseleave", () => {
+    el.src = normalSrc;
+  });
+}
+
+setHover("vrImg", "assets/vr_p1.png", "assets/vr_p1_after.png");
+setHover("qaImg", "assets/QA_p2.png", "assets/QA_p2_after.png");
+setHover("courseImg", "assets/course_p3.png", "assets/course_p3_after.png");
+</script>
+
+</body>
+</html>

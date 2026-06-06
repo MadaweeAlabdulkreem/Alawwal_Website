@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الكورسات</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+
+body {
+    background: url('assets/courses_bg.png') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.main-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 30px;
+    font-size: 55px;
+}
+
+.page-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px);
+}
+
+.courses-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 100px;
+    width: 95%;
+    margin: 40px auto;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.course-card {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* ── الرقم أكبر ── */
+.before {
+    width: 170px;           /* كان 130px */
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.course-card:hover .before {
+    transform: translateY(-8px);
+}
+
+/* ── wrapper أكبر ── */
+.after-wrapper {
+    position: relative;
+    width: 0;
+    height: 400px;          /* كان 320px */
+    overflow: hidden;
+    opacity: 0;
+    flex-shrink: 0;
+    align-self: flex-end;
+    transition: width 0.45s ease, opacity 0.35s ease;
+    margin-left: -15px;
+    z-index: 1;
+}
+
+/* ── صورة after أكبر ── */
+.after-img {
+    display: block;
+    width: 350px;           /* كان 280px */
+    height: 400px;          /* كان 320px */
+    object-fit: cover;
+    object-position: center 30px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+
+.arrow-link {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    width: 70px;
+    height: 70px;
+    background: none;       /* بدون خلفية */
+    border: none;           /* بدون حواف */
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s, transform 0.2s ease;
+    z-index: 10;
+}
+
+.arrow-link:hover {
+    transform: scale(1.15); /* يكبر قليلاً عند hover بدل خلفية */
+}
+
+.arrow-link img {
+    width: 70px;            /* أكبر من قبل */
+    height: 70px;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.40)); /* ظل خفيف للوضوح */
+}
+
+/* ── عند الـ hover ── */
+.course-card:hover .after-wrapper {
+    width: 350px;           /* نفس عرض after-img */
+    opacity: 1;
+}
+
+.course-card:hover .arrow-link {
+    opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<header class="hdr">
+  <a href="index.html" class="logo">
+    <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول">
+  </a>
+  <ul class="nav">
+    <li><a href="index.html">الصفحة الرئيسية</a></li>
+    <li><a href="#pioneers-sec">رواد التميز</a></li>
+    <li><a href="#fields-sec">المجالات</a></li>
+    <li><a href="#team-sec">من نحن</a></li>
+  </ul>
+  <a href="auth.html" class="btn-login">تسجيل الدخول</a>
+</header>
+
+<div class="page-center">
+
+  <h1 class="main-title">فرص التميز</h1>
+
+  <section class="courses-row">
+
+    <!-- كارد 1 -->
+    <div class="course-card">
+      <img src="assets/c12.png" class="before" alt="كورس 1">
+      <div class="after-wrapper">
+        <img src="assets/c1_after.png" class="after-img" alt="تفاصيل كورس 1">
+        <a href="COURSE_1_LINK_HERE" target="_blank" class="arrow-link">
+          <img src="assets/arrow.png" alt="رابط الكورس">
+        </a>
+      </div>
+    </div>
+
+    <!-- كارد 2 -->
+    <div class="course-card">
+      <img src="assets/c22.png" class="before" alt="كورس 2">
+      <div class="after-wrapper">
+        <img src="assets/c2_after.png" class="after-img" alt="تفاصيل كورس 2">
+        <a href="COURSE_2_LINK_HERE" target="_blank" class="arrow-link">
+          <img src="assets/arrow.png" alt="رابط الكورس">
+        </a>
+      </div>
+    </div>
+
+    <!-- كارد 3 -->
+    <div class="course-card">
+      <img src="assets/c32.png" class="before" alt="كورس 3">
+      <div class="after-wrapper">
+        <img src="assets/c3_after (2).png" class="after-img" alt="تفاصيل كورس 3">
+        <a href="COURSE_3_LINK_HERE" target="_blank" class="arrow-link">
+          <img src="assets/arrow.png" alt="رابط الكورس">
+        </a>
+      </div>
+    </div>
+
+    <!-- كارد 4 -->
+    <div class="course-card">
+      <img src="assets/c42.png" class="before" alt="كورس 4">
+      <div class="after-wrapper">
+        <img src="assets/c4_after2.png" class="after-img" alt="تفاصيل كورس 4">
+        <a href="COURSE_4_LINK_HERE" target="_blank" class="arrow-link">
+          <img src="assets/arrow.png" alt="رابط الكورس">
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>

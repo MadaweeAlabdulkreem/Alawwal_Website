@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تجربة الفضاء 360</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ================= RESET ================= */
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background-image: url('assets/خلفية الصفحة.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    /* ================= OVERLAY ================= */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at top,#00fff233,transparent 50%),
+        radial-gradient(circle at bottom,#8f00ff33,transparent 50%);
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .stars{
+      position:fixed;
+      inset:0;
+      background:transparent;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .stars::before,
+    .stars::after{
+      content:"";
+      position:absolute;
+      width:2px;
+      height:2px;
+      background:white;
+      box-shadow:
+        20px 30px white,
+        100px 80px white,
+        200px 120px white,
+        300px 200px white,
+        500px 400px white,
+        700px 150px white,
+        900px 300px white,
+        1100px 200px white;
+      animation: moveStars 6s linear infinite;
+      opacity:0.6;
+    }
+
+    .video-box video{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+    @keyframes moveStars{
+      from{transform:translateY(0)}
+      to{transform:translateY(-100px)}
+    }
+
+    /* ================= PAGE WRAPPER ================= */
+    .page-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 40px 60px;
+    }
+
+    /* ================= VR BLOCK ================= */
+    .vr-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 60px;
+    }
+
+    /* بطاقة 360 — فوق الفيديو */
+    .vr-info-card{
+  width: 95%;
+  max-width: 900px;
+  margin: 0 auto;
+
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 16px 16px 0 0;
+  background: rgba(0,255,255,0.05);
+  padding: 20px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+    .vr-info-card .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .vr-info-card .card-text h3 {
+      font-size: 25px;
+      font-weight: 700;
+      color: #00f5ff;
+      margin-bottom: 4px;
+    }
+
+    .vr-info-card .card-text p {
+      font-size: 15px;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* الفيديو */
+    .video-box{
+  width: 95%;
+  max-width: 900px;
+  height: 500px;
+  margin: 0 auto;
+
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,255,255,.15);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-top: none;
+}
+
+    .video-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ================= DIVIDER ================= */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+      margin: 0 auto;
+    }
+
+    /* ================= STATS ROW ================= */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 60px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 28px 20px;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat-item:last-child {
+      border-left: none;
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #00f5ff;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #888;
+      margin-top: 6px;
+    }
+
+    /* ================= SECTION HEADER ================= */
+    .section-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .section-header p {
+      font-size: 13px;
+      color: #aca9a9;
+    }
+
+    /* ================= PLANETS ================= */
+    
+.planets-section{
+  margin-bottom:40px;
+}
+
+.planets-grid{
+   display:grid;
+  grid-template-columns:repeat(8,1fr);
+  justify-content:center;
+  align-items:stretch;
+  gap:18px;
+
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.planet-card{
+  width:100%;
+  height:220px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+
+  padding:18px 10px;
+
+  cursor:pointer;
+  transition:.25s;
+}
+
+.planet-card:hover{
+  border-color:rgba(0,255,255,.4);
+  background:rgba(0,255,255,.07);
+  transform:translateY(-4px);
+}
+
+.planet-card.selected{
+  border-color:#00f5ff;
+  background:rgba(0,255,255,.1);
+}
+
+.planet-icon{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  width:100px;
+  height:100px;
+
+  margin-bottom:15px;
+}
+
+.planet-icon img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+
+  transition:.3s;
+}
+
+.planet-card:hover .planet-icon img{
+  transform:scale(1.1);
+}
+
+.planet-name{
+  font-size:13px;
+  font-weight:600;
+  display:block;
+}
+
+.planet-type{
+  font-size:11px;
+  color:#888;
+  display:block;
+  margin-top:3px;
+}
+
+.planet-dist{
+  font-size:10px;
+  color:#00f5ff;
+  display:block;
+  margin-top:6px;
+}
+
+    /* ================= HUD ================= */
+    .hud-section {
+      margin-bottom: 40px;
+    }
+
+    .hud-box {
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      padding: 28px;
+    }
+
+    .hud-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hud-title span {
+      font-size: 1.3rem;
+    }
+
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .hud-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .hud-label {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .hud-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .hud-unit {
+      font-size: 11px;
+      color: #555;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .card-icon img{
+  width: 4em;
+  height: 4em;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.card-icon img:hover{
+  transform: scale(1.15);
+  opacity: 0.85;
+}
+
+
+    /* ================= RESPONSIVE ================= */
+    @media(max-width:900px){
+      .page-content {
+        padding: 90px 20px 40px;
+      }
+
+      .nav { display: none; }
+
+      .vr-info-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 16px 20px;
+      }
+
+      .video-box { height: 45vw; min-height: 220px; }
+
+      .planets-grid { grid-template-columns: repeat(4, 1fr); }
+
+      .hud-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .stat-item { padding: 20px 10px; }
+    }
+
+    @media(max-width:500px){
+      .planets-grid { grid-template-columns: repeat(2, 1fr); }
+      .hud-grid { grid-template-columns: 1fr 1fr; }
+      .stat-num { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="stars"></div>
+<div class="overlay"></div>
+
+<!-- ══ Header ══ -->
+<header class="hdr" id="hdr">
+  <a href="index.html" class="logo">
+    <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول">
+  </a>
+  <ul class="nav" id="mainNav">
+    <li><a href="index.html">الصفحة الرئيسية</a></li>
+    <li><a href="#pioneers-sec">رواد التميز</a></li>
+    <li><a href="#fields-sec">المجالات</a></li>
+    <li><a href="#team-sec">من نحن</a></li>
+    <li class="mobile-auth"><a href="auth.html" class="btn-login" id="loginBtnMobile">تسجيل الدخول</a></li>
+    <li class="mobile-auth-welcome" id="mobileUserWelcome" style="display:none;">
+      <span>مرحباً <span id="mobileUserName"></span></span>
+      <button class="logout-btn" onclick="logout()">خروج</button>
+    </li>
+  </ul>
+  <a href="auth.html" class="btn-login" id="loginBtn">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">
+    مرحباً <span id="userName"></span>
+    <button class="logout-btn" onclick="logout()">خروج</button>
+  </span>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<div class="page-content">
+<!-- ── فيديو + بطاقة 360 ── -->
+<div class="vr-block">
+  <div class="vr-info-card">
+    <a href="https://www.youtube.com/watch?v=eHzVTqUX86Q" target="_blank">
+  <span class="card-icon">
+    <img src="assets/vr_small.png" alt="VR">
+  </span>
+</a>
+    <div class="card-text">
+      <h3>تقنية 360°</h3>
+      <p>
+        حرّك الشاشة أو الماوس في أي اتجاه لاستكشاف الفضاء بزاوية كاملة وتجربة غامرة.
+      </p>
+    </div>
+  </div>
+
+  <div class="video-box">
+     <a href="https://www.youtube.com/watch?v=eHzVTqUX86Q" target="_blank">
+    <video
+      autoplay
+      muted
+      loop
+      controls
+      playsinline>
+      
+      <source src="assets/go_tp_space.mp4" type="video/mp4">
+
+      متصفحك لا يدعم تشغيل الفيديو.
+    </video></a>
+  </div>
+</div>
+
+  <!-- ── إحصائيات ── -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">8+</div>
+      <div class="stat-label">كواكب مكتشفة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">240+</div>
+      <div class="stat-label">ساعة فضائية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12,000+</div>
+      <div class="stat-label">مستكشف معنا</div>
+    </div>
+  </div>
+
+  <!-- ── الكواكب ── -->
+  <div class="planets-section">
+    <div class="section-header">
+      <h2> اختر وجهتك</h2>
+      <p>انقر على أي كوكب لمعرفة تفاصيله</p>
+    </div>
+    <div class="planets-grid">
+      <div class="planet-card" onclick="selectPlanet(this,'mercury')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 8.png" alt="عطارد">
+  </span>
+        <span class="planet-name">عطارد</span>
+        <span class="planet-type">صخري</span>
+        <span class="planet-dist">77 مليون كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'venus')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 6.png" alt="الزهرة">
+  </span>
+        <span class="planet-name">الزهرة</span>
+        <span class="planet-type">غازي</span>
+        <span class="planet-dist">261 مليون كم</span>
+      </div>
+      <div class="planet-card selected" onclick="selectPlanet(this,'earth')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 5.png" alt="الأرض">
+  </span>
+        <span class="planet-name">الأرض</span>
+        <span class="planet-type">صخري</span>
+        <span class="planet-dist">0 كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'mars')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 1.png" alt="المريخ">
+  </span>
+        <span class="planet-name">المريخ</span>
+        <span class="planet-type">صخري</span>
+        <span class="planet-dist">225 مليون كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'jupiter')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 7.png" alt="المشتري">
+  </span>
+        <span class="planet-name">المشتري</span>
+        <span class="planet-type">غازي</span>
+        <span class="planet-dist">628 مليون كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'saturn')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 3.png" alt="زحل">
+  </span>
+        <span class="planet-name">زحل</span>
+        <span class="planet-type">غازي</span>
+        <span class="planet-dist">1.2 مليار كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'uranus')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 2.png" alt="أورانوس">
+  </span>
+        <span class="planet-name">أورانوس</span>
+        <span class="planet-type">جليدي</span>
+        <span class="planet-dist">2.7 مليار كم</span>
+      </div>
+      <div class="planet-card" onclick="selectPlanet(this,'neptune')">
+        <span class="planet-icon">
+    <img src="assets/Artboard 4.png" alt="نبتون">
+  </span>
+        <span class="planet-name">نبتون</span>
+        <span class="planet-type">جليدي</span>
+        <span class="planet-dist">4.3 مليار كم</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── لوحة المستكشف ── -->
+  <div class="hud-section">
+    <div class="hud-box">
+      <div class="hud-title">
+        لوحة المستكشف
+      </div>
+      <div class="hud-grid">
+        <div class="hud-item">
+          <div class="hud-label">المسافة من الأرض</div>
+          <div class="hud-val" id="hud-dist">0</div>
+          <span class="hud-unit">كيلومتر</span>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">درجة الحرارة</div>
+          <div class="hud-val" id="hud-temp">43°</div>
+          <span class="hud-unit">درجة مئوية</span>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">الجاذبية النسبية</div>
+          <div class="hud-val" id="hud-grav">1g</div>
+          <span class="hud-unit">نسبة لجاذبية الأرض</span>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">مدة الرحلة</div>
+          <div class="hud-val" id="hud-travel">أنت هنا</div>
+          <span class="hud-unit">بسرعة الضوء</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-content -->
+
+<script>
+console.log("VR PAGE READY");
+
+const planetData = {
+  mercury: { dist: '77,000,000',    temp: '430°',  grav: '0.38g', travel: '5 أشهر'  },
+  venus:   { dist: '261,000,000',   temp: '465°',  grav: '0.9g',  travel: '8 أشهر'  },
+  earth:   { dist: '0',             temp: '43°',   grav: '1g',    travel: 'أنت هنا'  },
+  mars:    { dist: '225,000,000',   temp: '-63°',  grav: '0.38g', travel: '7 أشهر'  },
+  jupiter: { dist: '628,000,000',   temp: '-110°', grav: '2.5g',  travel: '2.2 سنة' },
+  saturn:  { dist: '1,200,000,000', temp: '-140°', grav: '1.1g',  travel: '6 سنوات' },
+  uranus:  { dist: '2,700,000,000', temp: '-195°', grav: '0.9g',  travel: '9.5 سنة' },
+  neptune: { dist: '4,300,000,000', temp: '-200°', grav: '1.1g',  travel: '12 سنة'  },
+};
+
+function selectPlanet(card, key) {
+  document.querySelectorAll('.planet-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const d = planetData[key];
+  document.getElementById('hud-dist').textContent   = d.dist;
+  document.getElementById('hud-temp').textContent   = d.temp;
+  document.getElementById('hud-grav').textContent   = d.grav;
+  document.getElementById('hud-travel').textContent = d.travel;
+}
+</script>
+
+</body>
+</html>

@@ -27,7 +27,7 @@
 .pio-main {
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: min(1200px, 100%);
   max-width: 1200px;
   height: calc(100vh - 72px);
   margin: 72px auto 0;
@@ -36,7 +36,6 @@
   justify-content: space-between;
   align-items: stretch;
   gap: 32px;
-
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -174,6 +173,70 @@
   .pio-bio   { font-size:0.86rem; line-height: 2; }
   .pio-btn   { font-size:0.88rem; padding:11px 26px; }
 }
+
+@media (max-width: 768px){
+
+  .pio-main{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pio-hero{
+    height: 45vh;
+  }
+
+  .pio-char{
+    max-height: 45vh;
+  }
+
+  .pio-info{
+    width: 100%;
+    text-align: center;
+  }
+
+  .pio-info-inner{
+    align-items: center;
+  }
+
+  .pio-btn{
+    align-self: center;
+  }
+
+  .pio-nav{
+    flex-direction: row;
+    flex-wrap: wrap;
+    transform: none;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px){
+
+  .pio-main{
+    margin-top: 90px;
+  }
+
+  .pio-char{
+    max-height: 38vh;
+  }
+
+  .pio-name{
+    font-size: 1.3rem;
+  }
+
+  .pio-bio{
+    font-size: .8rem;
+    line-height: 1.8;
+  }
+
+  .pio-btn{
+    width: 100%;
+    max-width: 260px;
+  }
+}
+
 </style>
 </head>
 
@@ -186,7 +249,6 @@
 <div class="pio-overlay" id="pioOverlay"></div>
 
 <!-- ══ Header ══ -->
-<!-- ══════════ HEADER ══════════ -->
 <header class="hdr" id="hdr">
   <a href="index.html" class="logo"> <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول"> </a>
   
@@ -338,7 +400,8 @@
     pioChar.alt             = c.name;
     pioNameText.textContent = c.name;
     pioBio.textContent      = c.bio;
-    pioBtn.textContent      = c.btn;
+    pioBtn.textContent = c.btn;
+    pioBtn.onclick = () => window.location.href = "fields.html";
 
     pioLine.style.backgroundColor = c.color;
     pioBtn.style.background       = 'linear-gradient(135deg,' + c.color + ' 0%,#ffffff 100%)';

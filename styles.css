@@ -8,7 +8,7 @@
   font-style: normal;
   font-display: swap;
 }
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+
 
 :root {
   --Y:  #f0f600;   /* yellow */
@@ -144,6 +144,63 @@ button{font-family:var(--font);cursor:pointer;border:none;}
 .burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
 .burger.open span:nth-child(2){opacity:0;}
 .burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+@media (max-width: 1024px){
+  .nav{
+    gap:15px;
+  }
+
+  .nav a{
+    font-size:0.9rem;
+  }
+}
+
+@media (max-width: 768px){
+
+  .hdr{
+    flex-wrap:wrap;
+    height:auto;
+    padding:10px 15px;
+  }
+
+  /* إخفاء nav الافتراضي */
+  .nav{
+    position:static;
+    transform:none;
+
+    width:100%;
+    flex-direction:column;
+    gap:10px;
+
+    border:none;
+    margin-top:10px;
+
+    display:none; /* مهم */
+  }
+
+  /* لما تفتح القائمة */
+  .hdr.open .nav{
+    display:flex;
+  }
+
+  .nav a{
+    width:100%;
+    text-align:center;
+    padding:10px;
+    background:rgba(255,255,255,.05);
+  }
+
+  /* زر الهامبرغر يظهر */
+  .burger{
+    display:flex;
+  }
+
+  .btn-login,
+  .user-welcome{
+    display:none;
+  }
+}
+
 
 /* ════════════════════ HERO ════════════════════ */
 .hero{
@@ -602,7 +659,6 @@ tl p{color:rgba(255,255,255,.5);font-size:.97rem;max-width:560px;margin:22px aut
   justify-content:center;
   padding-top:40px;
   position:relative;
-  font-family:'Cairo',sans-serif;
 }
 
 /* Glass */
@@ -661,7 +717,7 @@ tl p{color:rgba(255,255,255,.5);font-size:.97rem;max-width:560px;margin:22px aut
   transform:translate(-50%,-50%);
   font-weight:900;
   font-size:34px;
-  color:#f0f600;
+  color:#ffffff;
 }
 
 /* Text */

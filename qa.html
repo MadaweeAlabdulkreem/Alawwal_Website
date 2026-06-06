@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحدث مع رائد الفضاء</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  overflow-x:hidden;
+  color:white;
+}
+
+/* ===== BACKGROUND ===== */
+.bg-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  top:70px;
+}
+
+
+
+/* ===== CHAT LAYOUT ===== */
+.chat-container{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:9px;
+  text-align:center;
+  
+}
+
+.title{
+  text-align:center;
+  width:100%;
+}
+
+.title h1{
+  font-size:38px;
+  margin-top:30px;
+  transform:translateX(-230px);
+  padding:15px;
+}
+
+
+
+/* ===== CHAT BOX ===== */
+.chat-box{
+  width:550px;
+  max-width:100%;
+  height:450px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:30px;
+  padding:0;
+  transform:translateX(-230px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* ===== MESSAGES AREA ===== */
+#messages{
+  flex:1;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:20px 20px 10px 20px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.2) transparent;
+}
+
+#messages::-webkit-scrollbar{
+  width:4px;
+}
+#messages::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.2);
+  border-radius:4px;
+}
+
+.message{
+  max-width:82%;
+  padding:13px 18px;
+  border-radius:18px;
+  line-height:1.8;
+  font-size:12px;
+  word-break:break-word;
+}
+
+.user{
+  background:rgba(255,255,255,0.92);
+  color:#1a1a1a;
+  margin-right:auto;
+  border-bottom-right-radius:4px;
+  font-weight:500;
+}
+
+.bot{
+  margin-left:auto;
+  color:#111;
+  border-bottom-left-radius:4px;
+}
+
+/* ===== DIVIDER ===== */
+.options-divider{
+  height:1px;
+  background:rgba(255,255,255,.12);
+  flex-shrink:0;
+}
+
+/* ===== OPTIONS AREA ===== */
+.options-wrapper{
+  flex-shrink:0;
+
+  background:rgba(0,0,0,.15);
+  position:relative;
+  overflow:hidden;
+  border-radius:0 0 30px 30px;
+}
+
+.options-label{
+  font-size:11px;
+  color:rgba(255,255,255,.5);
+  margin-bottom:10px;
+  text-align:right;
+  padding:0 16px;
+  letter-spacing:0.5px;
+}
+
+/* fade الطرف الايسر - يدل ان في المزيد */
+.options-wrapper::after{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:50px;
+  background:linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+  pointer-events:none;
+  z-index:1;
+}
+
+.options{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  gap:10px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:4px 16px 8px;
+  scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+}
+
+
+.option-btn{
+  flex: 0 0 160px;
+  width: 160px;
+  height: 44px;
+  border:none;
+  cursor:pointer;
+  padding:8px 12px;
+  border-radius:40px;
+  font-size:10px;
+  font-weight:600;
+  text-align:center;
+  white-space:normal;
+  line-height:1.4;
+  transition:transform .2s, box-shadow .2s, opacity .2s;
+  scroll-snap-align:start;
+  
+}
+
+.option-btn:hover{
+  transform:translateY(-2px) scale(1.02);
+  opacity:0.92;
+}
+
+.option-btn:active{
+  transform:scale(0.97);
+}
+
+/* أسئلة علي */
+.option-btn.ali{
+  background:linear-gradient(135deg,#f0f600 0%,#ffffff 100%);
+  color:#111;
+  box-shadow:0 4px 16px rgba(240,246,0,.3);
+}
+
+/* أسئلة ريانة */
+.option-btn.rayyanah{
+  background:linear-gradient(135deg,#b06cc4 0%,#ffffff 100%);
+  color:#111;
+  box-shadow:0 4px 16px rgba(176,108,196,.3);
+}
+
+/* أسئلة الأمير سلطان */
+.option-btn.sultan{
+  background:linear-gradient(135deg,#00a8aa 0%,#ffffff 100%);
+  color:#111;
+  box-shadow:0 4px 16px rgba(0,168,170,.3);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position: fixed;
+  left: 60px;
+  top: 62%;
+  transform: translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:10;
+  transition: transform 0.2s ease-out;
+}
+
+.char-item{
+  width:120px;
+  height:140px;
+  cursor:pointer;
+  opacity:0.45;
+  transition:opacity .3s, transform .3s, filter .3s;
+  filter:brightness(0.7) saturate(0.6);
+}
+
+.char-item img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.char-item.active{
+  opacity:1;
+  transform:scale(1.15);
+  filter:brightness(1.1) saturate(1.2) drop-shadow(0 0 12px rgba(255,255,255,0.4));
+}
+
+.char-item:hover:not(.active){
+  opacity:0.7;
+  transform:scale(1.05);
+  filter:brightness(0.9) saturate(0.8);
+}
+
+/* ===== SCROLLBAR BASE ===== */
+.options::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* ===== علي ===== */
+.options.ali::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,#f0f600,#ffffff);
+  border-radius: 10px;
+}
+
+/* ===== ريانة ===== */
+.options.rayyanah::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,#b06cc4,#ffffff);
+  border-radius: 10px;
+}
+
+/* ===== سلطان ===== */
+.options.sultan::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,#00a8aa,#ffffff);
+  border-radius: 10px;
+}
+
+/* track (الخلفية) */
+.options::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+
+/* Firefox */
+.options.ali {
+  scrollbar-color: #f0f600 rgba(255,255,255,0.05);
+}
+
+.options.rayyanah {
+  scrollbar-color: #b06cc4 rgba(255,255,255,0.05);
+}
+
+.options.sultan {
+  scrollbar-color: #00a8aa rgba(255,255,255,0.05);
+}
+
+/* ===== RESPONSIVE FIX ===== */
+@media (max-width: 1024px) {
+  .chat-box,
+  .options {
+    width: 90%;
+  }
+
+  .title h1 {
+    font-size: 32px;
+  }
+
+  .sidebar {
+    left: 20px;
+    transform: translateY(-50%);
+  }
+
+  .character-btn {
+    width: 180px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .chat-container {
+    padding: 15px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .title h1{
+  font-size:42px;
+  margin-top:0;
+  margin-bottom:8px;
+  transform:translateX(-230px);
+  padding:10px;
+}
+
+  .chat-box {
+    height: 420px;
+    width: 95%;
+    transform: none;
+  }
+
+  .sidebar {
+    position: relative;
+    left: 0;
+    top: 0;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto;
+  }
+
+  .char-item{
+    width: 80px;
+    height: 95px;
+  }
+
+  .character-btn {
+    width: auto;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title h1 {
+    font-size: 22px;
+  }
+
+  .chat-box {
+    height: 370px;
+    padding: 0;
+  }
+
+  .option-btn {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+
+  .character-btn {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 1024px){
+  .sidebar{
+    left: 10px;
+    transform: translateY(-50%);
+  }
+
+  .chat-box{
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px){
+  .sidebar{
+    position: fixed;
+    flex-direction: row;
+    bottom: 20px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .char-item{
+    width: 70px;
+    height: 90px;
+  }
+
+  .chat-box{
+    height: 420px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  
+<!-- ══ Header ══ -->
+<header class="hdr" id="hdr">
+  <a href="index.html" class="logo"> <img class="logo-img" src="assets/شعار ابيض (1).png" alt="منصة الأول"> </a>
+  
+  <ul class="nav" id="mainNav">
+    <li><a href="index.html">الصفحة الرئيسية</a></li>
+    <li><a href="#pioneers-sec">رواد التميز</a></li>
+    <li><a href="#fields-sec">المجالات</a></li>
+    <li><a href="#team-sec">من نحن</a></li>
+    <li class="mobile-auth"><a href="auth.html" class="btn-login" id="loginBtnMobile">تسجيل الدخول</a></li>
+    <li class="mobile-auth-welcome" id="mobileUserWelcome" style="display:none;"><span>مرحباً <span id="mobileUserName"></span></span> <button class="logout-btn" onclick="logout()">خروج</button></li>
+  </ul>
+  <a href="auth.html" class="btn-login" id="loginBtn">تسجيل الدخول</a>
+  <span class="user-welcome" id="userWelcome" style="display:none;">مرحباً <span id="userName"></span> <button class="logout-btn" onclick="logout()">خروج</button></span>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<!-- BACKGROUND -->
+<video autoplay muted loop playsinline class="bg-video">
+  <source src="assets/space_vid3.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<!-- TRIANGLE SIDEBAR -->
+<div class="sidebar" id="charNav"></div>
+
+<!-- CHAT -->
+<div class="chat-container">
+
+  <div class="title">
+    <h1 id="chatTitle">تحدث مع</h1>
+  </div>
+
+  <div class="chat-box">
+    <div id="messages"></div>
+    <div class="options-divider"></div>
+    <div class="options-wrapper">
+      <div class="options-label">اختر سؤالك</div>
+      <div class="options" id="options"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const chatTitle = document.getElementById("chatTitle");
+const chatBox = document.getElementById("messages");
+const options = document.getElementById("options");
+
+window.addEventListener("scroll", () => {
+  const sidebar = document.getElementById("charNav");
+
+  let offset = window.scrollY * 0.2; // قوة الحركة
+  sidebar.style.transform = `translateY(calc(-50% + ${offset}px))`;
+});
+
+const characters = {
+
+  ali:{
+    name:"علي القرني",
+    title:"تحدث مع علي القرني",
+    color:"#f0f600",
+    startMessage:"مرحباً، أنا علي القرني 🚀 ماذا تريد أن تعرف عن رحلتي الفضائية؟",
+    flow:{
+      start:{
+        choices:[
+          "كيف تم اختيارك لرحلة الفضاء؟",
+          "ما أصعب مرحلة في التدريب؟",
+          "كيف كانت الحياة داخل محطة الفضاء؟",
+          "ما نصيحتك للطلاب المهتمين بالفضاء؟"
+        ],
+        answers:{
+          "كيف تم اختيارك لرحلة الفضاء؟":"تم اختياري بعد سلسلة من الاختبارات الطبية والعلمية والبدنية ضمن برنامج رواد الفضاء السعودي.",
+          "ما أصعب مرحلة في التدريب؟":"التدريب على الحالات الطارئة والمحاكاة الواقعية كان من أكثر المراحل تحدياً.",
+          "كيف كانت الحياة داخل محطة الفضاء؟":"كانت مليئة بالأنشطة العلمية والعمل الجماعي مع رواد الفضاء من مختلف الدول.",
+          "ما نصيحتك للطلاب المهتمين بالفضاء؟":"التركيز على العلوم والتقنية والاستمرار في التعلم والعمل الجاد."
+        },
+        next:"end"
+      },
+      end:{
+        choices:["شكراً لك","إعادة المحادثة"],
+        answers:{
+          "شكراً لك":"سعدت بالحديث معك 🚀",
+          "إعادة المحادثة":"لنبدأ من جديد."
+        },
+        next:"restart"
+      }
+    }
+  },
+
+  rayyanah:{
+    name:"ريانة برناوي",
+     title:"تحدث مع ريانة برناوي",
+    color:"#b06cc4",
+    startMessage:"أهلاً، أنا ريانة برناوي 👩‍🚀 اسألني عن تجربتي في الفضاء.",
+    flow:{
+      start:{
+        choices:[
+          "كيف كان شعورك كأول رائدة فضاء سعودية؟",
+          "ما طبيعة الأبحاث التي أجريتها؟",
+          "ما أكثر شيء أدهشك في الفضاء؟",
+          "ما رسالتك للفتيات السعوديات؟"
+        ],
+        answers:{
+          "كيف كان شعورك كأول رائدة فضاء سعودية؟":"كان شعوراً استثنائياً ومصدر فخر كبير لتمثيل المرأة السعودية في مجال الفضاء.",
+          "ما طبيعة الأبحاث التي أجريتها؟":"شاركت في تجارب علمية وطبية لدراسة تأثير بيئة الفضاء على جسم الإنسان.",
+          "ما أكثر شيء أدهشك في الفضاء؟":"جمال الأرض وروعة مشاهدتها من المدار كانت تجربة لا تُنسى.",
+          "ما رسالتك للفتيات السعوديات؟":"آمني بنفسك واعملي بجد، فكل حلم يمكن تحقيقه بالإصرار."
+        },
+        next:"end"
+      },
+      end:{
+        choices:["شكراً لك","إعادة المحادثة"],
+        answers:{
+          "شكراً لك":"سعدت بالحوار معك 🌟",
+          "إعادة المحادثة":"لنبدأ من جديد."
+        },
+        next:"restart"
+      }
+    }
+  },
+
+  sultan:{
+    name:"الأمير سلطان بن سلمان",
+    title:"تحدث مع الأمير سلطان بن سلمان",
+    color:"#00a8aa",
+    startMessage:"مرحباً، أنا الأمير سلطان بن سلمان، أول رائد فضاء عربي 🚀",
+    flow:{
+      start:{
+        choices:[
+          "كيف كانت رحلتك التاريخية عام 1985؟",
+          "ما شعورك كأول رائد فضاء عربي؟",
+          "ماذا تعلمت من تجربة الفضاء؟",
+          "ما نصيحتك للشباب السعودي؟"
+        ],
+        answers:{
+          "كيف كانت رحلتك التاريخية عام 1985؟":"كانت تجربة تاريخية ومصدر فخر للمملكة والعالم العربي بأكمله.",
+          "ما شعورك كأول رائد فضاء عربي؟":"شعرت بمسؤولية كبيرة لتمثيل العرب والمسلمين في هذا الإنجاز العلمي.",
+          "ماذا تعلمت من تجربة الفضاء؟":"تعلمت أهمية العلم والعمل الجماعي والانضباط لتحقيق الإنجازات الكبرى.",
+          "ما نصيحتك للشباب السعودي؟":"استثمروا في التعليم والمعرفة وواصلوا السعي لتحقيق طموحاتكم."
+        },
+        next:"end"
+      },
+      end:{
+        choices:["شكراً لك","إعادة المحادثة"],
+        answers:{
+          "شكراً لك":"أتمنى لك التوفيق والنجاح.",
+          "إعادة المحادثة":"لنبدأ من جديد."
+        },
+        next:"restart"
+      }
+    }
+  }
+
+};
+
+let currentCharacter = "ali";
+let flow = characters[currentCharacter].flow;
+let currentStep = "start";
+let questionCount = 0;
+
+const charNav = document.getElementById("charNav");
+
+const charData = [
+  { id:"ali",      img:"assets/مثلث علي.png" },
+  { id:"rayyanah", img:"assets/مثلث ريانة.png" },
+  { id:"sultan",   img:"assets/مثلث الامير.png" }
+];
+
+/* بناء السايدبار */
+charData.forEach((c, i) => {
+  const div = document.createElement("div");
+  /* علي يأخذ active تلقائياً من البداية */
+  div.className = "char-item" + (i === 0 ? " active" : "");
+  div.dataset.charId = c.id;
+
+  const img = document.createElement("img");
+  img.src = c.img;
+  img.alt = c.id;
+
+  div.appendChild(img);
+  div.onclick = () => selectCharacter(c.id);
+  charNav.appendChild(div);
+});
+
+/* ===== FUNCTIONS ===== */
+function selectCharacter(character) {
+  questionCount = 0;
+
+  chatTitle.textContent = characters[character].title;
+
+  /* تحديث active على السايدبار */
+  document.querySelectorAll(".char-item").forEach(el => {
+    el.classList.toggle("active", el.dataset.charId === character);
+  });
+
+  currentCharacter = character;
+  flow = characters[character].flow;
+  currentStep = "start";
+
+  chatBox.innerHTML = "";
+  addMessage(characters[character].startMessage, "bot");
+  showOptions("start");
+}
+
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = `message ${type}`;
+
+  if (type === "bot") {
+    div.style.color = "#111";
+    if (currentCharacter === "ali") {
+      div.style.background = "linear-gradient(135deg,#f0f600 0%,#ffffff 100%)";
+      div.style.boxShadow = "0 6px 20px rgba(240,246,0,.3)";
+    } else if (currentCharacter === "rayyanah") {
+      div.style.background = "linear-gradient(135deg,#b06cc4 0%,#ffffff 100%)";
+      div.style.boxShadow = "0 6px 20px rgba(176,108,196,.3)";
+    } else if (currentCharacter === "sultan") {
+      div.style.background = "linear-gradient(135deg,#00a8aa 0%,#ffffff 100%)";
+      div.style.boxShadow = "0 6px 20px rgba(0,168,170,.3)";
+    }
+  }
+
+  div.innerText = text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function showOptions(step) {
+  options.innerHTML = "";
+
+  options.className = `options ${currentCharacter}`;
+
+  flow[step].choices.forEach(choice => {
+    const btn = document.createElement("button");
+    btn.className = `option-btn ${currentCharacter}`;
+    btn.innerText = choice;
+    btn.onclick = () => handleChoice(choice);
+    options.appendChild(btn);
+  });
+}
+
+function handleChoice(choice) {
+  addMessage(choice, "user");
+
+  setTimeout(() => {
+    addMessage(flow[currentStep].answers[choice], "bot");
+
+    if (choice === "شكراً لك") {
+      options.innerHTML = "";
+      return;
+    }
+
+    if (choice === "إعادة المحادثة") {
+      questionCount = 0;
+      currentStep = "start";
+      chatBox.innerHTML = "";
+      addMessage(characters[currentCharacter].startMessage, "bot");
+      showOptions("start");
+      return;
+    }
+
+    if (currentStep === "start") {
+      questionCount++;
+      if (questionCount >= 2) {
+        currentStep = "end";
+        showOptions("end");
+        return;
+      }
+    }
+
+  }, 700);
+}
+
+/* تشغيل علي تلقائياً عند فتح الصفحة */
+selectCharacter("ali");
+</script>
+
+</body>
+</html>
