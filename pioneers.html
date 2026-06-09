@@ -359,7 +359,8 @@
   var bgA          = document.getElementById('pioBgA');
   var bgB          = document.getElementById('pioBgB');
 
-  var current     = 0;
+  var params = new URLSearchParams(window.location.search);
+  var current = Number(params.get("char")) || 0;
   var isAnimating = false;
   var thumbEls    = [];
   var activeBg    = 'A'; /* أي طبقة خلفية ظاهرة حالياً */
@@ -490,7 +491,7 @@
   });
 
   /* ══ Init ══ */
-  applyData(0);
+  applyData(current);
 
   pioChar.classList.add('anim-enter');
   pioGlow.classList.add('anim-enter');
