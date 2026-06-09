@@ -2,6 +2,13 @@
    منصة الأول — Auth Page (Login / Sign Up)
    ============================================================ */
 
+body {
+  background: url('assets/خلفية الصفحة.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  overflow-x: hidden;
+}
+
 /* ══ Page layout ══ */
 .auth-pg {
   position: relative;
@@ -11,6 +18,16 @@
   align-items: center;
   justify-content: center;
   padding: 48px 20px 60px;
+}
+
+.page-glass2{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  background:url('assets/افكت قلاسي .png') center/cover no-repeat;
+  mix-blend-mode:overlay;
+  opacity:1;
+  pointer-events:none;
 }
 
 /* ══ Card ══ */
